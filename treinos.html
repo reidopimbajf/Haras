@@ -1,1 +1,17 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Treinos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="verificarLogin(); carregarCavalosSelectTreino();">
+  <h2>Registro de Treinos</h2>
+  <select id="cavalo-treino"></select>
+  <input id="modalidade" placeholder="Modalidade" />
+  <input id="data" type="datetime-local" />
+  <input id="duracao" placeholder="Duração (min)" />
+  <textarea id="obs" placeholder="Observações"></textarea>
+  <button onclick="registrarTreino()">Registrar Treino</button>
+  <script src="script.js"></script>
+</body>
+</html>
