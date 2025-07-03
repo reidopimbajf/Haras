@@ -1,1 +1,19 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cavalos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="verificarLogin(); listarCavalos();">
+  <h2>Cadastro de Cavalos</h2>
+  <input id="nome" placeholder="Nome do Cavalo" />
+  <input id="raca" placeholder="Raça" />
+  <input id="idade" placeholder="Idade" />
+  <input id="modalidade" placeholder="Modalidade (ex: Vaquejada)" />
+  <textarea id="obs" placeholder="Observações"></textarea>
+  <button onclick="salvarCavalo()">Salvar Cavalo</button>
+  <h3>Lista de Cavalos</h3>
+  <ul id="lista-cavalos"></ul>
+  <script src="script.js"></script>
+</body>
+</html>
