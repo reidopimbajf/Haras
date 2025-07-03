@@ -55,56 +55,69 @@
     <div id="lista-alim" class="list-group mt-3"></div>
   </div>
 
-  <script>
-    const cavaloSelect = document.getElementById("cavalo");
-    const listaAlim = document.getElementById("lista-alim");
+  
+    <script>
+  const cavaloSelect = document.getElementById("cavalo");
+  const listaAlim = document.getElementById("lista-alim");
 
-    function carregarCavalos() {
-      const cavalos = JSON.parse(localStorage.getItem("cavalos") || "[]");
-      cavaloSelect.innerHTML = "";
-      cavalos.forEach((c, i) => {
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = c.nome;
-        cavaloSelect.appendChild(opt);
-      });
+  function carregarCavalos() {
+    const cavalos = JSON.parse(localStorage.getItem("cavalos") || "[]");
+    cavaloSelect.innerHTML = "";
+    if (cavalos.length === 0) {
+      const opt = document.createElement("option");
+      opt.textContent = "Nenhum cavalo cadastrado";
+      opt.disabled = true;
+      cavaloSelect.appendChild(opt);
+      cavaloSelect.disabled = true;
+      return;
+    }
+    cavalos.forEach((c, i) => {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = c.nome;
+      cavaloSelect.appendChild(opt);
+    });
+  }
+
+  function salvarAlimentacao(e) {
+    e.preventDefault();
+
+    const cavaloId = cavaloSelect.value;
+    const data = document.getElementById("data").value;
+    const tipo = document.getElementById("tipo").value;
+    const quantidade = document.getElementById("quantidade").value;
+
+    if (!data || !tipo || !quantidade || !cavaloId) {
+      alert("Preencha todos os campos.");
+      return;
     }
 
-    function salvarAlimentacao(e) {
-      e.preventDefault();
-      const alimentacoes = JSON.parse(localStorage.getItem("alimentacoes") || "[]");
-      alimentacoes.push({
-        cavaloId: cavaloSelect.value,
-        data: document.getElementById("data").value,
-        tipo: document.getElementById("tipo").value,
-        quantidade: document.getElementById("quantidade").value
-      });
-      localStorage.setItem("alimentacoes", JSON.stringify(alimentacoes));
-      document.getElementById("form-alim").reset();
-      renderAlimentacoes();
-    }
-
-    function renderAlimentacoes() {
-      const cavalos = JSON.parse(localStorage.getItem("cavalos") || "[]");
-      const alimentacoes = JSON.parse(localStorage.getItem("alimentacoes") || "[]").reverse();
-      listaAlim.innerHTML = "";
-      alimentacoes.slice(0, 10).forEach(a => {
-        const cavaloNome = cavalos[a.cavaloId]?.nome || "Desconhecido";
-        const item = document.createElement("div");
-        item.className = "list-group-item";
-        item.innerHTML = `<strong>${cavaloNome}</strong> - ${a.tipo} (${a.quantidade}) em ${new Date(a.data).toLocaleString()}`;
-        listaAlim.appendChild(item);
-      });
-    }
-
-    function logout() {
-      alert("Sessão encerrada!");
-      window.location.href = "login.html";
-    }
-
-    document.getElementById("form-alim").addEventListener("submit", salvarAlimentacao);
-    carregarCavalos();
+    const alimentacoes = JSON.parse(localStorage.getItem("alimentacoes") || "[]");
+    alimentacoes.push({ cavaloId, data, tipo, quantidade });
+    localStorage.setItem("alimentacoes", JSON.stringify(alimentacoes));
+    document.getElementById("form-alim").reset();
     renderAlimentacoes();
-  </script>
-</body>
-</html>
+  }
+
+  function renderAlimentacoes() {
+    const cavalos = JSON.parse(localStorage.getItem("cavalos") || "[]");
+    const alimentacoes = JSON.parse(localStorage.getItem("alimentacoes") || "[]").reverse();
+    listaAlim.innerHTML = "";
+    alimentacoes.slice(0, 10).forEach(a => {
+      const cavaloNome = cavalos[a.cavaloId]?.nome || "Desconhecido";
+      const item = document.createElement("div");
+      item.className = "list-group-item";
+      item.innerHTML = `<strong>${cavaloNome}</strong> - ${a.tipo} (${a.quantidade}) em ${new Date(a.data).toLocaleString()}`;
+      listaAlim.appendChild(item);
+    });
+  }
+
+  function logout() {
+    alert("Sessão encerrada!");
+    window.location.href = "login.html";
+  }
+
+  document.getElementById("form-alim").addEventListener("submit", salvarAlimentacao);
+  carregarCavalos();
+  renderAlimentacoes();
+</script>
