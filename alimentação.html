@@ -1,1 +1,16 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alimentação</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="verificarLogin(); carregarCavalosSelect();">
+  <h2>Registro de Alimentação</h2>
+  <select id="cavalo"></select>
+  <input id="data" type="datetime-local" />
+  <input id="tipo" placeholder="Tipo de alimento" />
+  <input id="quantidade" placeholder="Quantidade" />
+  <button onclick="registrarAlimentacao()">Registrar</button>
+  <script src="script.js"></script>
+</body>
+</html>
